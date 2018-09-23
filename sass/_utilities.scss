@@ -1,0 +1,62 @@
+$sides: (top, bottom, left, right);
+
+@for $i from 6 to 101 {
+    .m-#{$i}{
+        margin: #{$i}rem !important;
+    }
+    .p-#{$i}{
+        padding: #{$i}rem !important;
+    }
+    .my-#{$i}{
+        margin-top: #{$i}rem !important;
+        margin-bottom: #{$i}rem !important;
+    }
+    .mx-#{$i}{
+        margin-right: #{$i}rem !important;
+        margin-left: #{$i}rem !important;
+    }
+    .py-#{$i}{
+        padding-top: #{$i}rem !important;
+        padding-bottom: #{$i}rem !important;
+    }
+    .px-#{$i}{
+        padding-right: #{$i}rem !important;
+        padding-left: #{$i}rem !important;
+    }
+    .h-#{$i}vh{
+        height: #{$i}vh !important;
+    }
+    .w-#{$i}vh{
+        width: #{$i}vh !important;
+    }
+    @each $side in $sides {
+        .m#{str-slice($side, 0, 1)}-#{$i} {
+            margin-#{$side}: #{$i}rem !important;
+        }
+    
+        .p#{str-slice($side, 0, 1)}-#{$i} {
+            padding-#{$side}: #{$i}rem !important;
+        }
+    }
+}
+
+@for $i from 1 to 101 {
+    $val: ($i * 5);
+    .w-#{$val}px{
+        width: #{$val}px !important;
+    }
+    .h-#{$val}px{
+        height: #{$val}px !important;
+    }
+}
+
+$colors: (white, gray, black, red, yellow, blue);
+
+@each $color in $colors {
+    .b-#{$color}{
+        background: $color !important;
+    }
+    .text-#{$color}{
+        color: $color !important;
+    }
+}

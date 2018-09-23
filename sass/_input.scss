@@ -1,0 +1,17 @@
+input[type="text"]{
+    font-family: "GoogleSansBold";
+    border: none;
+    border-bottom: 1px solid $gray;
+    outline: none;
+    font-size: 18px;
+    transition: 0.5s all ease-in-out;
+
+    &::placeholder{
+        color: $gray;
+    }
+
+    &:hover, &:focus{
+        outline: none;
+        border-bottom: 1px solid $blue;
+    }
+}
