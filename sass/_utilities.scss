@@ -50,6 +50,19 @@ $sides: (top, bottom, left, right);
     }
 }
 
+@for $i from 1 to 5 {
+    $val: $i * 25;
+    $value: ($val/100);
+    .o-#{$val}{
+        opacity: #{$value};
+    }
+}
+
+.br-3{
+    bottom: 3rem !important;
+    right: 3rem !important;
+}
+
 $colors: (white, gray, black, red, yellow, blue);
 
 @each $color in $colors {

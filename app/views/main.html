@@ -9,7 +9,14 @@
 
 <body>
 
-    <div class="b-red h-100vh">
+    <div id="bg" class="h-100vh">
+
+        <div class="position-fixed br-3 text-right">
+            <i class="fas fa-bell text-shadow text-white o-75 pr-2"></i>
+            <i class="fas fa-wifi text-shadow text-white o-75 pr-2"></i>
+            <i class="fas fa-volume-up text-white o-75 pr-2"></i>
+            <h1 class="text-white text-shadow o-75">10:26</h1>
+        </div>
 
     </div>
 
@@ -26,6 +33,15 @@
 
     <script>
         window.jQuery = window.$ = require('jquery');
+        
+        $(document).ready(() => {
+            $.getJSON("../config/config.json", (data) => {
+                if (data.background !== "") {
+                    $("#bg").css("background", "url(" + data.background + ")");
+                    $("#bg").css("background-size", "cover");
+                }
+            });
+        });
     </script>
     <script src="../scripts/vendor.js"></script>
 </body>
