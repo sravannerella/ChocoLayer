@@ -58,6 +58,21 @@ $sides: (top, bottom, left, right);
     }
 }
 
+@for $i from 0 to 11 {
+    .b-#{$i}{
+        bottom: #{$i}rem !important;
+    }
+    .r-#{$i}{
+        right: #{$i}rem !important;
+    }
+    .t-#{$i}{
+        top: #{$i}rem !important;
+    }
+    .l-#{$i}{
+        left: #{$i}rem !important;
+    }
+}
+
 .br-3{
     bottom: 3rem !important;
     right: 3rem !important;

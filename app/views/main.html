@@ -10,14 +10,33 @@
 <body>
 
     <div id="bg" class="h-100vh">
-
         <div class="position-fixed br-3 text-right">
             <i class="fas fa-bell text-shadow text-white o-75 pr-2"></i>
-            <i class="fas fa-wifi text-shadow text-white o-75 pr-2"></i>
-            <i class="fas fa-volume-up text-white o-75 pr-2"></i>
+            <i id="wifi" class="fas fa-wifi text-shadow text-white o-75 pr-2"></i>
+            <i id="volume" class="fas fa-volume-up text-white o-75 pr-2"></i>
             <h1 class="text-white text-shadow o-75">10:26</h1>
         </div>
+    </div>
 
+    <!-- Volume -->
+    <div class="position-fixed b-3 r-0" id="volumeMenu" style="display: none;">
+        <input class="position-relative b-9 volumeSlider" type="range" min="0" max="100" value="100">
+    </div>
+
+    <!-- WIFI -->
+    <div class="position-fixed b-8 r-1" id="wifiMenu" style="display: none;">
+        <ul>
+            <li>Hello</li>
+            <li>World</li>
+            <li>Sravan</li>
+            <li>Nerella</li>
+            <li>Cadburry</li>
+            <li>Hello</li>
+            <li>World</li>
+            <li>Sravan</li>
+            <li>Nerella</li>
+            <li>Cadburry</li>
+        </ul>
     </div>
 
     <div class="b-white">
@@ -41,6 +60,30 @@
                     $("#bg").css("background-size", "cover");
                 }
             });
+        });
+
+        $("#bg").click( (e) => {
+            if(e.target.hasAttribute('style')){
+                closeAll();
+            }
+        })
+        
+        function closeAll(){
+            var style = $("#volumeMenu").attr('style');
+            var style1 = $("#wifiMenu").attr('style');
+            if(style === "" || style1 === ""){
+                $("#volumeMenu").attr("style", "display: none;");
+                $("#wifiMenu").attr("style", "display: none;");
+            }
+        }
+
+        $("#volume").click( ()=> {
+            closeAll();
+            $("#volumeMenu").fadeToggle();
+        });
+        $("#wifi").click( ()=> {
+            closeAll();
+            $("#wifiMenu").fadeToggle();
         });
     </script>
     <script src="../scripts/vendor.js"></script>

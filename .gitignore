@@ -1,3 +1,4 @@
 node_modules/
 app/scripts/vendor.js
 app/styles/
+package-lock.json
