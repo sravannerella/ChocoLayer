@@ -14,32 +14,22 @@
             <i class="fas fa-bell text-shadow text-white o-75 pr-2"></i>
             <i id="wifi" class="fas fa-wifi text-shadow text-white o-75 pr-2"></i>
             <i id="volume" class="fas fa-volume-up text-white o-75 pr-2"></i>
-            <h1 class="text-white text-shadow o-75">10:26</h1>
+            <h1 id="time" class="text-white text-shadow o-75">10:26</h1>
         </div>
     </div>
 
     <!-- Volume -->
-    <div class="position-fixed b-3 r-0" id="volumeMenu" style="display: none;">
-        <input class="position-relative b-9 volumeSlider" type="range" min="0" max="100" value="100">
+    <div class="position-fixed b-3 r-1" id="volumeMenu" style="display: none;">
+        <input class="position-relative b-8 volumeSlider" type="range" min="0" max="100" value="100">
     </div>
 
     <!-- WIFI -->
     <div class="position-fixed b-8 r-1" id="wifiMenu" style="display: none;">
-        <ul>
-            <li>Hello</li>
-            <li>World</li>
-            <li>Sravan</li>
-            <li>Nerella</li>
-            <li>Cadburry</li>
-            <li>Hello</li>
-            <li>World</li>
-            <li>Sravan</li>
-            <li>Nerella</li>
-            <li>Cadburry</li>
+        <ul id="networks">
         </ul>
     </div>
 
-    <div class="b-white">
+    <!-- <div class="b-white">
         <div class="d-flex flex-column align-items-center justify-content-center h-100vh">
             <div class="text-left w-75">
                 <h2 class="text-small">Sunday, September 23</h2>
@@ -48,17 +38,52 @@
                 <input type="text" class="py-3 w-100" placeholder="Lightning Search">
             </div>
         </div>
-    </div>
+    </div> -->
 
     <script>
         window.jQuery = window.$ = require('jquery');
+        var wifi = require('node-wifi');
+        var wifiNames = [];
         
         $(document).ready(() => {
+
+            setInterval(()=>{
+                formatAMPM(new Date());
+            },200);
+
             $.getJSON("../config/config.json", (data) => {
                 if (data.background !== "") {
                     $("#bg").css("background", "url(" + data.background + ")");
                     $("#bg").css("background-size", "cover");
                 }
+            });
+
+            var ssid;
+
+            wifi.init({
+                iface: null
+            });
+
+            wifi.getCurrentConnections( (err, network) => {
+                ssid = network[0];
+                console.log("SSID", ssid);
+            });
+
+            wifi.scan().then( (networks) => {
+                $("#networks").empty();
+                networks.forEach( (network) => {
+                    console.log(wifiNames.indexOf(network.ssid));
+                    if(wifiNames.indexOf(network.ssid) === -1){
+                        if(ssid.ssid === network.ssid){
+                            $("#networks").append("<li class='bg-blue  text-white'>" + network.ssid + "</li>");
+                        } else {
+                            $("#networks").append("<li>" + network.ssid + "</li>");
+                        }
+                        wifiNames.push(network.ssid);
+                    }
+                });
+            }).catch((err)=>{
+                console.log("Error", err);
             });
         });
 
@@ -66,7 +91,18 @@
             if(e.target.hasAttribute('style')){
                 closeAll();
             }
-        })
+        });
+
+        function formatAMPM(date) {
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            var ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            var strTime = hours + ':' + minutes + ' ' + ampm;
+            $("#time").text(strTime);
+        }
         
         function closeAll(){
             var style = $("#volumeMenu").attr('style');

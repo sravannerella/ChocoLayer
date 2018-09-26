@@ -78,13 +78,13 @@ $sides: (top, bottom, left, right);
     right: 3rem !important;
 }
 
-$colors: (white, gray, black, red, yellow, blue);
+$colors: ('white': $white, 'gray': $gray, 'black': $black, 'red': $red, 'yellow': $yellow, 'blue': $blue);
 
-@each $color in $colors {
-    .b-#{$color}{
-        background: $color !important;
+@each $color, $map in $colors {
+    .bg-#{$color}{
+        background: $map !important;
     }
     .text-#{$color}{
-        color: $color !important;
+        color: $map !important;
     }
 }
