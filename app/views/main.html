@@ -11,7 +11,7 @@
 
     <div id="bg" class="h-100vh">
         <div class="position-fixed br-3 text-right">
-            <i class="fas fa-bell text-shadow text-white o-75 pr-2"></i>
+            <i id="power" class="fas fa-power-off text-shadow text-white o-75 pr-2"></i>
             <i id="wifi" class="fas fa-wifi text-shadow text-white o-75 pr-2"></i>
             <i id="volume" class="fas fa-volume-up text-white o-75 pr-2"></i>
             <h1 id="time" class="text-white text-shadow o-75">10:26</h1>
@@ -29,6 +29,14 @@
         </ul>
     </div>
 
+    <div class="position-fixed b-8 r-1" id="powerMenu" style="display: none;">
+        <ul>
+            <li>Sleep</li>
+            <li onclick="reboot()">Restart</li>
+            <li onclick="shutdown()">PowerOff</li>
+        </ul>
+    </div>
+
     <!-- <div class="b-white">
         <div class="d-flex flex-column align-items-center justify-content-center h-100vh">
             <div class="text-left w-75">
@@ -43,6 +51,7 @@
     <script>
         window.jQuery = window.$ = require('jquery');
         var wifi = require('node-wifi');
+        const shutdown = require('electron-shutdown-command');
         var wifiNames = [];
         
         $(document).ready(() => {
@@ -66,13 +75,11 @@
 
             wifi.getCurrentConnections( (err, network) => {
                 ssid = network[0];
-                console.log("SSID", ssid);
             });
 
             wifi.scan().then( (networks) => {
                 $("#networks").empty();
                 networks.forEach( (network) => {
-                    console.log(wifiNames.indexOf(network.ssid));
                     if(wifiNames.indexOf(network.ssid) === -1){
                         if(ssid.ssid === network.ssid){
                             $("#networks").append("<li class='bg-blue  text-white'>" + network.ssid + "</li>");
@@ -82,7 +89,7 @@
                         wifiNames.push(network.ssid);
                     }
                 });
-            }).catch((err)=>{
+            }).catch( (err) => {
                 console.log("Error", err);
             });
         });
@@ -92,6 +99,26 @@
                 closeAll();
             }
         });
+
+        function shutdown(){
+            shutdown.shutdown({
+                force: true,
+                timerseconds: 20,
+                sudo: true,
+                debug: true,
+                quitapp: true
+            })
+        }
+
+        function reboot(){
+            shutdown.reboot({
+                force: true,
+                timerseconds: 20,
+                sudo: true,
+                debug: true,
+                quitapp: true
+            });
+        }
 
         function formatAMPM(date) {
             var hours = date.getHours();
@@ -107,9 +134,11 @@
         function closeAll(){
             var style = $("#volumeMenu").attr('style');
             var style1 = $("#wifiMenu").attr('style');
-            if(style === "" || style1 === ""){
+            var style2 = $("#powerMenu").attr('style');
+            if(style === "" || style1 === "" || style2 === ""){
                 $("#volumeMenu").attr("style", "display: none;");
                 $("#wifiMenu").attr("style", "display: none;");
+                $("#powerMenu").attr('style', "display: none;");
             }
         }
 
@@ -120,6 +149,10 @@
         $("#wifi").click( ()=> {
             closeAll();
             $("#wifiMenu").fadeToggle();
+        });
+        $("#power").click( () => {
+            closeAll();
+            $("#powerMenu").fadeToggle();
         });
     </script>
     <script src="../scripts/vendor.js"></script>
