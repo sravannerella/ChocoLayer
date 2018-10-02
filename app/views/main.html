@@ -24,16 +24,24 @@
     </div>
 
     <!-- WIFI -->
-    <div class="position-fixed b-8 r-1" id="wifiMenu" style="display: none;">
-        <ul id="networks">
+    <div class="position-fixed shadow b-9 r-1" id="wifiMenu" style="display: none;">
+        <ul id="networks" class="mb-0">
         </ul>
     </div>
 
-    <div class="position-fixed b-8 r-1" id="powerMenu" style="display: none;">
-        <ul>
+    <div class="position-fixed shadow b-9 r-1" id="powerMenu" style="display: none;">
+        <ul class="mb-0">
             <li>Sleep</li>
             <li onclick="reboot()">Restart</li>
             <li onclick="shutdown()">PowerOff</li>
+        </ul>
+    </div>
+
+    <div id="contextMenu" class="contextmenu shadow position-absolute w-150px d-none">
+        <ul class="mb-0">
+            <li><i class="far fa-image pr-2"></i>Change Wallpaper</li>
+            <li><i class="far fa-folder pr-2"></i>Files</li>
+            <li><i class="far fa-sun pr-2"></i>Settings</li>
         </ul>
     </div>
 
@@ -51,8 +59,25 @@
     <script>
         window.jQuery = window.$ = require('jquery');
         var wifi = require('node-wifi');
-        const shutdown = require('electron-shutdown-command');
+        const shutdownCmd = require('electron-shutdown-command');
         var wifiNames = [];
+
+        $('body').contextmenu( (event) => {
+            closeAll();
+            var x = event.pageX;
+            var y = event.pageY;
+            $("#contextMenu").css("left", x);
+            $("#contextMenu").css("top", y);
+            $("#contextMenu").removeClass('d-none');
+        });
+
+        $('body').click( () => {
+            var hasClass = $("#contextMenu").hasClass('d-none');
+            console.log(hasClass);
+            if( !hasClass ){
+                $("#contextMenu").addClass('d-none');
+            }
+        });
         
         $(document).ready(() => {
 
@@ -74,7 +99,9 @@
             });
 
             wifi.getCurrentConnections( (err, network) => {
-                ssid = network[0];
+                if(network !== undefined && network.length > 0){
+                    ssid = network[0];
+                }
             });
 
             wifi.scan().then( (networks) => {
@@ -101,7 +128,7 @@
         });
 
         function shutdown(){
-            shutdown.shutdown({
+            shutdownCmd.shutdown({
                 force: true,
                 timerseconds: 20,
                 sudo: true,
@@ -111,7 +138,7 @@
         }
 
         function reboot(){
-            shutdown.reboot({
+            shutdownCmd.reboot({
                 force: true,
                 timerseconds: 20,
                 sudo: true,
