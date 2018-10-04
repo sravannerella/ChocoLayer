@@ -11,10 +11,23 @@
 
     <div id="bg" class="h-100vh">
         <div class="position-fixed br-3 text-right">
-            <i id="power" class="fas fa-power-off text-shadow text-white o-75 pr-2"></i>
-            <i id="wifi" class="fas fa-wifi text-shadow text-white o-75 pr-2"></i>
-            <i id="volume" class="fas fa-volume-up text-white o-75 pr-2"></i>
+            <i id="power" class="fas fa-power-off text-shadow text-white o-75 pr-2 text-shadow"></i>
+            <i id="wifi" class="fas fa-wifi text-shadow text-white o-75 pr-2 text-shadow"></i>
+            <i id="volume" class="fas fa-volume-up text-white o-75 pr-2 text-shadow"></i>
             <h1 id="time" class="text-white text-shadow o-75">10:26</h1>
+        </div>
+    </div>
+
+    <div id="window" class="position-absolute shadow-lg bg-white t-0 w-350px h-250px rounded d-none">
+        <div class="row h-30px m-0 rounded-top bg-black">
+            <div class="col my-auto d-inline-flex p-0 pl-2">
+                <span class="dot mr-2 rounded-circle bg-red"></span>
+                <span class="dot mr-2 rounded-circle bg-yellow"></span>
+                <span class="dot rounded-circle bg-red"></span>
+            </div>
+        </div>
+        <div>
+            <h1>Change Wallpaper</h1>
         </div>
     </div>
 
@@ -39,22 +52,22 @@
 
     <div id="contextMenu" class="contextmenu shadow position-absolute w-150px d-none">
         <ul class="mb-0">
-            <li><i class="far fa-image pr-2"></i>Change Wallpaper</li>
-            <li><i class="far fa-folder pr-2"></i>Files</li>
-            <li><i class="far fa-sun pr-2"></i>Settings</li>
+            <li id="wallpaper"><i class="far fa-image pr-2"></i>Change Wallpaper</li>
+            <li id="files"><i class="far fa-folder pr-2"></i>Files</li>
+            <li id="settings"><i class="far fa-sun pr-2"></i>Settings</li>
         </ul>
     </div>
 
-    <!-- <div class="b-white">
+    <div class="b-gray">
         <div class="d-flex flex-column align-items-center justify-content-center h-100vh">
             <div class="text-left w-75">
                 <h2 class="text-small">Sunday, September 23</h2>
             </div>
             <div class="w-75">
-                <input type="text" class="py-3 w-100" placeholder="Lightning Search">
+                <input type="text" class="py-3 w-100" placeholder="Lightning Search - What are you looking for?">
             </div>
         </div>
-    </div> -->
+    </div>
 
     <script>
         window.jQuery = window.$ = require('jquery');
@@ -73,7 +86,6 @@
 
         $('body').click( () => {
             var hasClass = $("#contextMenu").hasClass('d-none');
-            console.log(hasClass);
             if( !hasClass ){
                 $("#contextMenu").addClass('d-none');
             }
@@ -90,6 +102,10 @@
                     $("#bg").css("background", "url(" + data.background + ")");
                     $("#bg").css("background-size", "cover");
                 }
+            });
+
+            $("#wallpaper").click( () => {
+                $("#window").removeClass('d-none');
             });
 
             var ssid;
