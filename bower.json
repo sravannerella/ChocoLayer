@@ -1,0 +1,25 @@
+{
+  "name": "chocolayer",
+  "description": "window manager",
+  "main": "main.js",
+  "authors": [
+    "sravannerella"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "window",
+    "manager",
+    "cadberry"
+  ],
+  "homepage": "https://github.com/sravannerella/ChocoLayer",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery-ui": "^1.12.1"
+  }
+}

@@ -12,4 +12,8 @@
 .dot{
     width: 12px;
     height: 12px;
+
+    &:hover{
+        filter: contrast(0.75) opacity(0.75);
+    }
 }

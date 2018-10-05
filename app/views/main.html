@@ -18,16 +18,18 @@
         </div>
     </div>
 
-    <div id="window" class="position-absolute shadow-lg bg-white t-0 w-350px h-250px rounded d-none">
-        <div class="row h-30px m-0 rounded-top bg-black">
-            <div class="col my-auto d-inline-flex p-0 pl-2">
-                <span class="dot mr-2 rounded-circle bg-red"></span>
-                <span class="dot mr-2 rounded-circle bg-yellow"></span>
-                <span class="dot rounded-circle bg-red"></span>
+    <div id="screen" class="position-absolute t-0 w-100vh h-100vh">
+        <div id="window" class="position-absolute shadow-lg bg-white w-350px h-250px rounded d-none">
+            <div id="titlebar" class="h-30px m-0 rounded-top">
+                <div class="my-auto h-100 float-right d-inline-flex p-0 py-2 pr-2">
+                    <span class="dot mr-2 rounded-circle bg-red"></span>
+                    <span class="dot mr-2 rounded-circle bg-yellow"></span>
+                    <span class="dot rounded-circle bg-red"></span>
+                </div>
             </div>
-        </div>
-        <div>
-            <h1>Change Wallpaper</h1>
+            <div id="windowBody">
+                <p>Change Wallpaper</p>
+            </div>
         </div>
     </div>
 
@@ -92,6 +94,11 @@
         });
         
         $(document).ready(() => {
+
+            $("#window").draggable({ 
+                containment: "#screen",
+                scroll: false
+            });
 
             setInterval(()=>{
                 formatAMPM(new Date());

@@ -27,7 +27,7 @@ $sides: (top, bottom, left, right);
         height: #{$i}vh !important;
     }
     .w-#{$i}vh{
-        width: #{$i}vh !important;
+        width: #{$i}vw !important;
     }
     @each $side in $sides {
         .m#{str-slice($side, 0, 1)}-#{$i} {
