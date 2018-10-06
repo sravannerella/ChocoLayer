@@ -87,4 +87,13 @@ $colors: ('white': $white, 'gray': $gray, 'black': $black, 'red': $red, 'yellow'
     .text-#{$color}{
         color: $map !important;
     }
+    .hover-#{$color}{
+        &:hover{
+            color: $map !important;
+        }
+    }
+}
+
+.z-front{
+    z-index: 999;
 }
