@@ -19,30 +19,7 @@
     </div>
 
     <div id="screen" class="position-absolute t-0 w-100vh h-100vh">
-        <div id="window" class="position-absolute shadow-lg bg-white w-350px h-250px rounded d-none">
-            <div id="titlebar" class="h-30px m-0 rounded-top">
-                <div class="my-auto h-100 float-right d-inline-flex p-0 py-2 pr-2">
-                    <span class="dot mr-2 rounded-circle bg-red"></span>
-                    <span class="dot mr-2 rounded-circle bg-yellow"></span>
-                    <span class="dot rounded-circle bg-red"></span>
-                </div>
-            </div>
-            <div id="body">
-                <p>Change Wallpaper</p>
-            </div>
-        </div>
-        <div id="window2" class="position-absolute shadow-lg bg-white w-350px h-250px rounded d-none">
-                <div id="titlebar" class="h-30px m-0 rounded-top">
-                    <div class="my-auto h-100 float-right d-inline-flex p-0 py-2 pr-2">
-                        <span class="dot mr-2 rounded-circle bg-red"></span>
-                        <span class="dot mr-2 rounded-circle bg-yellow"></span>
-                        <span class="dot rounded-circle bg-red"></span>
-                    </div>
-                </div>
-                <div id="body">
-                    <p>Change Wallpaper</p>
-                </div>
-            </div>
+        
     </div>
 
     <!-- Volume -->
@@ -64,7 +41,7 @@
         </ul>
     </div>
 
-    <div id="contextMenu" class="contextmenu shadow position-absolute w-150px d-none">
+    <div id="contextMenu" class="contextmenu shadow position-absolute w-150px d-none z-up">
         <ul class="mb-0">
             <li id="wallpaper"><i class="far fa-image pr-2"></i>Change Wallpaper</li>
             <li id="files"><i class="far fa-folder pr-2"></i>Files</li>
@@ -88,6 +65,7 @@
         var wifi = require('node-wifi');
         const shutdownCmd = require('electron-shutdown-command');
         var wifiNames = [];
+        var i = 0;
 
         $('body').contextmenu( (event) => {
             closeAll();
@@ -98,7 +76,7 @@
             $("#contextMenu").removeClass('d-none');
         });
 
-        $('body').click( () => {
+        $('body').click( (e) => {
             var hasClass = $("#contextMenu").hasClass('d-none');
             if( !hasClass ){
                 $("#contextMenu").addClass('d-none');
@@ -106,11 +84,6 @@
         });
         
         $(document).ready(() => {
-
-            $('[id^="window"]').draggable({ 
-                containment: "#screen",
-                scroll: false
-            });
 
             setInterval(()=>{
                 formatAMPM(new Date());
@@ -124,21 +97,26 @@
             });
 
             $("#wallpaper").click( () => {
-                $("#window").removeClass('d-none');
-                $("#window2").removeClass('d-none');
+                $("#screen").append('<div id="window' + i + '" class="position-absolute shadow-lg bg-white w-350px h-250px rounded"><div id="titlebar" class="h-30px m-0 rounded-top"><div class="my-auto h-100 float-right d-inline-flex p-0 py-2 pr-2"><span class="dot mr-2 rounded-circle bg-red"></span><span class="dot mr-2 rounded-circle bg-yellow"></span><span id="close" class="dot rounded-circle bg-red"></span></div></div><div id="body"><p>Change Wallpaper</p></div></div>');
                 closeAll();
-            });
+                i++;
+                $('[id^="window"]').draggable({ 
+                    containment: "#screen",
+                    scroll: false
+                });
+                $('[id^="close"]').on('click', (e)=> {
+                    var id = "#" + e.target.parentNode.parentNode.parentNode.id;
+                    $(id).remove();
+                })
 
-            $('[id^="window"]').click( (e) => {
-                $('[id^="window"]').removeClass('z-front');
-                $('#' + e.target.id).addClass('z-front');
-                closeAll();
-            });
-
-            $('[id^="window"]').mousedown( (e) => {
-                $('[id^="window"]').removeClass('z-front');
-                $('#' + e.target.id).addClass('z-front');
-                closeAll();
+                $('[id^="window"]').on('click mousedown', (e) => {
+                    $('[id^="window"]').removeClass('z-front');
+                    if(e.target.id !== "") {
+                        var windowId = "#" + e.target.id;
+                        $(windowId).addClass('z-front');
+                    }
+                    closeAll();
+                });
             });
 
             var ssid;

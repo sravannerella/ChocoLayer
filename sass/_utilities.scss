@@ -97,3 +97,7 @@ $colors: ('white': $white, 'gray': $gray, 'black': $black, 'red': $red, 'yellow'
 .z-front{
     z-index: 999;
 }
+
+.z-up{
+    z-index: 1000;
+}
