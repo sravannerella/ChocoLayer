@@ -8,7 +8,7 @@ var paths = {
     scripts : ['./node_modules/popper.js/dist/umd/popper.min.js', './bower_components/jquery-ui/jquery-ui.min.js', './node_modules/bootstrap/dist/js/bootstrap.min.js'],
     styles: [
         './node_modules/bootstrap/dist/css/bootstrap.min.css', 
-        './node_modules/@fortawesome/fontawesome-free/css/all.min.css',
+        './app/webfonts/css/all.min.css',
         './bower_components/jquery-ui/themes/base/all.css'
     ]
 }

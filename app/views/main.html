@@ -97,7 +97,7 @@
             });
 
             $("#wallpaper").click( () => {
-                $("#screen").append('<div id="window' + i + '" class="position-absolute shadow-lg bg-white w-350px h-250px rounded"><div id="titlebar" class="h-30px m-0 rounded-top"><div class="my-auto h-100 float-right d-inline-flex p-0 py-2 pr-2"><span class="dot mr-2 rounded-circle bg-red"></span><span class="dot mr-2 rounded-circle bg-yellow"></span><span id="close" class="dot rounded-circle bg-red"></span></div></div><div id="body"><p>Change Wallpaper</p></div></div>');
+                $("#screen").append('<div id="window' + i + '" class="position-absolute shadow-lg bg-white w-350px h-250px rounded"><div id="titlebar '+ i +'" class="h-30px m-0 rounded-top"><div class="my-auto h-100 float-right d-inline-flex p-0 py-2 pr-2"><span class="dot mr-2 rounded-circle bg-red"></span><span class="dot mr-2 rounded-circle bg-yellow"></span><span id="close" class="dot rounded-circle bg-red"></span></div></div><div id="body"><p>Change Wallpaper</p></div></div>');
                 closeAll();
                 i++;
                 $('[id^="window"]').draggable({ 
@@ -107,7 +107,12 @@
                 $('[id^="close"]').on('click', (e)=> {
                     var id = "#" + e.target.parentNode.parentNode.parentNode.id;
                     $(id).remove();
-                })
+                });
+
+                $('[id^="titlebar"]').on('click mousedown', (e) => {
+                    $('[id^="window"]').removeClass('z-front');
+                    $("#" + e.target.parentNode.id).addClass('z-front');
+                });
 
                 $('[id^="window"]').on('click mousedown', (e) => {
                     $('[id^="window"]').removeClass('z-front');
@@ -128,6 +133,9 @@
             wifi.getCurrentConnections( (err, network) => {
                 if(network !== undefined && network.length > 0){
                     ssid = network[0];
+                } else {
+                    $("#wifi").removeClass("fa-wifi");
+                    $("#wifi").addClass("fa-wifi-slash");   
                 }
             });
 
