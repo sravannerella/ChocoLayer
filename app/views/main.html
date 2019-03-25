@@ -195,7 +195,7 @@
             var style = $("#volumeMenu").attr('style');
             var style1 = $("#wifiMenu").attr('style');
             var style2 = $("#powerMenu").attr('style');
-            if(style === "" || style1 === "" || style2 === ""){
+            if(style === "" || style1 === "" || style2 === "" || style === undefined || style1 === undefined || style2 === undefined){
                 $("#volumeMenu").attr("style", "display: none;");
                 $("#wifiMenu").attr("style", "display: none;");
                 $("#powerMenu").attr('style', "display: none;");
